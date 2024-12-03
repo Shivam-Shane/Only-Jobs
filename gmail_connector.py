@@ -35,7 +35,14 @@ class MailSender():
     def forget_password_sender(self, useremail, username, password):
         """
         Sends a password reset email.
+        Args:
+            useremail(str): to whome to send a reset email
+            username(str): Username of the receiver
+            password(object): New password to be sent
+        Returns:
+            bool: None
         """
+
         body = f"""
         <html>
         <body>
@@ -75,6 +82,13 @@ class MailSender():
     def signup_otp_sending(self, useremail)->int:
         """
         Sends an OTP for signup.
+
+        Args:
+            useremail: To whome to send the OTP to.
+
+        Returns:
+            OTP: For cross verification of otp internally.
+
         """
         otp=''.join(random.choices(string.digits, k=6))
         body = f"""
@@ -112,13 +126,3 @@ class MailSender():
             # Reconnect and retry
             logging.info("Reconnecting to SMTP server...")
             self.connect_to_smtp_server()
-            self.server_connection.sendmail(self.config["SMTP_USERNAME"], useremail, msg.as_string())
-            logging.info(f"Email re-sent to {useremail}")
-
-    # def __del__(self): # if not closed explicitly
-    #     if self.server_connection:
-    #         self.server_connection.quit()
-
-# if __name__ == "__main__":
-#     password_sender = MailSender()
-#     print(password_sender.signup_otp_sending("test@gmail.com"))
