@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Eaten!</title>
+    <link rel="stylesheet" href="{% static 'css/404.css' %}">
+
+</head>
+<body>
+    <div class="container">
+        <div class="error">
+            <p class="p">4</p>
+            <span class="dracula">
+                <div class="con">
+                    <div class="hair"></div>
+                    <div class="hair-r"></div>
+                    <div class="head"></div>
+                    <div class="eye"></div>
+                    <div class="eye eye-r"></div>
+                    <div class="mouth"></div>
+                    <div class="blod"></div>
+                    <div class="blod blod2"></div>
+                </div>
+            </span>
+            <p class="p">4</p>
+            <div class="page-ms">
+                <p class="page-msg">Oops, jobs you're looking for has been eaten, But don't worry, there are still plenty of jobs for you to have!</p>
+                <a href="{% url 'home' %}"><button class="go-back">EAT HOME</button></a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

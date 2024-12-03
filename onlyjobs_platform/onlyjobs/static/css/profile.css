@@ -1,0 +1,587 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family:'Poppins',sans-serif;
+    box-sizing: border-box;
+}
+body{
+    background-color: #f0f2f5;
+    color: #5f5f5f;
+
+}
+a{
+    text-decoration: none;
+    color: #5f5f5f;
+}
+.navbar{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #fff;
+    padding: 6px 6%;
+    position: sticky;
+    top : 0;
+    z-index: 100;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+}
+.logo img{
+    width: 30px;
+    margin-right: 15px;
+    display: block;
+}
+.navbar-center ul li{
+    display: inline-block;
+    list-style: none;
+}
+
+.navbar-center ul li a{
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    margin: 5px 8px;
+    padding-right: 5px;
+    position: relative;
+}
+.navbar-center ul li a img{
+    width: 30px;
+}
+.navbar-center ul li a::after{
+    content: '';
+    width: 0;
+    height: 2px;
+    background: #7d2ae8;
+    position: absolute;
+    bottom: -10px;
+    transition: width 0.3s;
+
+}
+.navbar-center ul li a:hover::after,
+.navbar-center ul li a.active-link::after{
+    width: 100%;
+}
+.nav-profile-img{
+    width: 40px;
+    border-radius: 50%;
+    display: block;
+    cursor: pointer;
+    position: relative;
+}
+
+.online{
+    position: relative;
+}
+.online::after{
+    content: '';
+    width: 7px;
+    height: 7px;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    right: 0;
+    top: 0;
+    background: #41db51;
+    position: absolute;
+}
+.search-box{
+    background: #f0f2f5;
+    width: 250px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    padding: 0px 15px; 
+}
+.navbar-left{
+    display: flex;
+    align-items: center;
+}
+.search-box img{
+    width: 14px;
+}
+.search-box input{
+    width: 100%;
+    background: transparent;
+    padding: 8px;
+    outline: none;
+    border: none;
+
+}
+
+/*   */
+
+.container{
+    display: flex;
+    padding: 20px 6%;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+/* Basic styling for the profile container */
+.main-content {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    
+}
+
+.profile-container {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    
+}
+
+.profile-header {
+    text-align: center;
+    margin-bottom: 20px;
+    
+}
+
+.profile-pic {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    
+}
+
+.user-name {
+    font-size: 24px;
+    font-weight: bold;
+    
+}
+
+.user-title {
+    font-size: 18px;
+    color: #555;
+}
+
+.profile-details {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+}
+
+.profile-details p {
+    font-size: 16px;
+    margin: 5px 0;
+    margin-left: 10px;
+    position: sticky;
+}
+
+.useredit-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 18px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease;
+}
+
+/* Remove background and other default button styling */
+button {
+    background: transparent;  /* No background color */
+    border: none;             /* Removes border */
+  cursor: pointer;
+}
+.useredit-btn:hover {
+    background-color: #0056b3;
+}
+
+.useredit-btn i {
+    margin: 0;
+}
+
+/* Popup Modal styling */
+.open {
+    display: block !important;
+}
+
+#edituserModal {
+    display: none; /* Default state of the modal */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    z-index: 1000;
+}
+
+#edituserModal .usermodal-content {
+    background-color: white;
+    padding: 20px;
+    margin: 10% auto;
+    width: 50%;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+.usermodal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    overflow: auto;
+}
+
+.usermodal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 100%;
+    max-width: 500px;
+    border-radius: 8px;
+}
+
+.userclose-btn {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.userclose-btn:hover,
+.userclose-btn:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.usermodal input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.usermodal-buttons {
+    text-align: right;
+    margin-top: 20px;
+}
+
+.usercancel-btn, .usersave-btn {
+    padding: 10px 15px;
+    margin-left: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.usercancel-btn {
+    background-color: #f44336;
+    color: white;
+}
+
+.usersave-btn {
+    background-color: #28a745;
+    color: white;
+}
+
+/* Image upload model */
+
+.modaluploadimage {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.4); /* Black with transparency */
+}
+
+/* Modal Content */
+.modal-contentuploadimage {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 110%;
+    max-width: 400px;
+}
+
+/* Hide the button frame */
+.modal-contentuploadimage button {
+    border: none; /* Remove the border */
+    background: transparent; /* Remove background */
+    padding: 10px 20px; /* Optional: Add custom padding */
+    font-size: 16px; /* Adjust text size if needed */
+    color: #7d2ae8; /* Set text color */
+    cursor: pointer; /* Make it interactive */
+    outline: none; /* Remove focus outline */
+    display: inline-block; /* Ensure button behaves like an inline element */
+    text-align: center; /* Center text inside the button */
+    transition: color 0.3s ease; /* Optional: Smooth color transition on hover */
+}
+
+/* Close Button */
+.closeuploadimage {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.closeuploadimage:hover,
+.closeuploadimage:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Right Sidebar */
+
+.right-sidebar{
+    flex-basis: 25%;
+    align-self: flex-start;
+    position: sticky;
+    top: 73px;
+}
+.sidebar-news{
+    background: #fff;
+    padding: 10px 25px;
+    
+
+}
+.info-icon{
+    width: 15px;
+    float: right;
+    margin-top: 15px;
+}
+.sidebar-news h3{
+    font-size: 18 px;
+    font-weight: 600;
+    color: #333;
+    margin: 10px 0 30px;
+     
+}
+.sidebar-news a{
+    display: block; 
+    font-size: 12px;
+    font-weight: 600;
+    margin-top: 10px;
+    margin-bottom: -5px;
+
+}
+.sidebar-news span{
+    font-size: 12px;
+
+}
+
+
+.sidebar-news .read-more-link{
+    color: #7d2ae8;
+    font-weight: 500;
+    margin: 20px 0 10px;
+
+}
+.sidebar-ad{
+    background: #ffff;
+    padding: 15px 25px;
+    text-align: center;
+    margin: 12px 0;
+    font-size: 12px;
+}
+
+.sidebar-ad img{
+    width: 60px;
+    border-radius: 50%;
+    margin: 4px;
+
+     
+}
+.sidebar-ad small{
+    float: right;
+    font-weight: 500;
+}
+.sidebar-ad p{
+    margin-top: 30px;
+    margin-bottom: 10px;
+
+}
+
+.sidebar-ad b{
+    display: block;
+    font-weight: 500;
+    margin-top: 10px;
+}
+.ad-link{
+    display: inline-block;
+    border: 1px solid #7d2ae8;
+    border-radius: 30px;
+    padding: 5px 15px;
+    color: #7d2ae8;
+    font-weight: 500;
+    margin: 20px auto 10px;
+
+}
+
+
+.sidebar-useful-links { 
+    padding: 15px 25px;
+    text-align: center;
+    
+
+}   
+.sidebar-useful-links a{
+    display: inline-block;
+    font-size: 14px;
+    margin: 4px 2px;
+}
+.copyright-msg{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    margin-top: 10px;
+    font-weight: 500;
+
+}
+.copyright-msg img{
+    width: 18px;
+    margin-right: 4px;
+
+}
+
+/*Main Content*/
+
+.main-content{
+    flex-basis: 47%;
+    
+} 
+
+.profile-menu-wrap{
+    position: absolute;
+    top: 100%;
+    right: 5%;
+    width: 320px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s;
+    
+}
+.profile-menu-wrap.open-menu{
+    max-height: 400px;
+}
+.profile-menu{
+    background: #222;
+    color: #fff;
+    padding: 20px;
+    margin: 10px;
+    
+}
+.user-info{
+    display: flex;
+    align-items: center;
+
+}
+.user-info img{
+    width: 50px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+.user-info h3{
+    font-weight: 500;
+    margin-bottom: 0  px;
+}
+.user-info a{
+    color: #c9dbf8;
+    font-size: 13px;
+}
+.profile-menu hr{
+    border: 0;
+    height: 1px;
+    width: 100%;
+    background: #fff;
+    margin: 15px 0 10px;
+
+}
+.profile-menu-link{
+    display: flex;
+    align-items: center;
+    color: #fff;
+    margin: 12px 0;
+    font-size: 14px;
+
+}
+.profile-menu-link p{
+    width: 100%;
+}
+.profile-menu-link img{
+    width: 35px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+.profile-menu-link span{
+    font-size: 10px;
+}
+
+#showMoreLink{
+    display: none;
+}
+
+
+/* MEDIA QUERIES */
+@media only screen and (max-width:600px){
+    .search-box{
+        background: transparent;
+        width: auto;
+        padding: 0;
+    }
+    .search-box input {
+        width: 0;
+        padding: 0;
+    }
+    .navbar-center ul li a span{
+        display: none;
+    }
+    .navbar-center ul li a {
+        padding-right: 0 ;
+        margin: 5px;
+    }
+    .nav-profile-img{
+        width: 30px;
+    }
+    .container{
+        padding: 15px 3%;
+    }
+     .right-sidebar{
+        flex-basis: 100%;
+        position: relative;
+        top: unset;
+    }
+    .main-content{
+        flex-basis: 100%;
+    }
+
+    #showMoreLink{
+        display: block;
+        width: fit-content;
+        margin: 10px auto;
+        font-size: 14px;
+        cursor: pointer;
+    }
+    .sidebar-activity{
+        display: none;
+    }
+    .sidebar-activity.open-activity{
+        display: block; 
+    }
+      
+}

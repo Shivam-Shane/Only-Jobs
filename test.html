@@ -1,0 +1,58 @@
+# Check if user is logged in (if session doesn't have user info, redirect to login)
+        if not user_email or not user_id:
+            messages.error(request, 'User not authenticated.')
+            return redirect('login')  # Redirect to the login page
+
+        # Get the form data from the POST request
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        address = request.POST.get('address')
+        qualification = request.POST.get('qualification')
+        designation = request.POST.get('designation')
+        company = request.POST.get('company')
+
+        # Prepare the user details for updating
+        user_details = {
+            'user_id': user_id,
+            'first_name': first_name,
+            'last_name': last_name,
+            'address': address,
+            'qualification': qualification,
+            'designation': designation,
+            'company': company,
+            'user_email': user_email,
+        }
+
+        # Assuming update_user_details() updates the database with the new details
+        if update_user_details(user_details):
+            messages.success(request, 'Profile updated successfully.')
+            return redirect('profile_update')  # Redirect to profile page after success
+        
+        # If update failed, show an error message
+        messages.error(request, 'Failed to update profile. Please try again.')
+        return redirect('profile_update')  # Redirect to profile page on failure
+
+    # If the method is GET, render the profile page with user details
+    else:
+        # Retrieve session data
+        user_email = request.session.get('user_email')
+        user_id = request.session.get('user_id')
+
+        # Check if the user is logged in (redirect to login if not)
+        if not user_email or not user_id:
+            return redirect('login')  # Redirect to the login page if user is not authenticated
+
+        # Fetch user details, assuming _helper_user_details() gets the user's profile info
+        user_detail = _helper_user_details(request)
+        
+        # Ensure there is always an HttpResponse object returned, even if no user detail found
+        if user_detail:
+            context = {'user_detail': user_detail, 'user_email': user_email,
+                       'MEDIA_URL': settings.MEDIA_URL  # for dynamic media urls
+                       }
+        else:
+            context = {'user_email': user_email,
+                       'MEDIA_URL': settings.MEDIA_URL  # for dynamic media urls
+                       }
+
+        return render(request, 'profile.html', context)  # Return the profile page with context

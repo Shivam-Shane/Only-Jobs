@@ -1,0 +1,138 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <title> Login and Registration</title>
+  <!-- Fontawesome CDN Link -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Link to the CSS file -->
+  <link rel="stylesheet" href="{% static 'css/base.css' %}">
+  <link rel="stylesheet" href="{% static 'css/login_signup.css' %}">
+  <!-- link to favicon -->
+  <link rel="x-icon" sizes="180x180" href="{% static 'images/favicon/apple-touch-icon.png' %}">
+  <link rel="icon" type="/x-icon" sizes="32x32" href="{% static 'images/favicon/favicon.ico' %}">
+  <link rel="icon" type="x-icon" sizes="16x16" href="{% static 'images/favicon/favicon-16x16.png' %}">
+</head>
+<body>
+
+    {% if messages %}
+    <div id="messages">
+        {% for message in messages %}
+            <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Login Sign up container -->
+  <div class="container">
+    <input type="checkbox" id="flip">
+      <div class="cover">
+        <div class="front">
+          <img src="{% static 'images/frontImg.jpg' %}" alt="Front Image">
+          <div class="text">
+            <span class="text-1">Every new job is a <br> new adventure</span>
+            <span class="text-2">Let's get them</span>
+          </div>
+        </div>
+        <div class="back">
+          <img src="{% static 'images/backImg.jpg' %}" alt="Front Image">
+          <div class="text">
+            <span class="text-1">Complete miles of job <br> with one step</span>
+            <span class="text-2">Let's get started</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="forms">
+        <div class="form-content">
+          <div class="login-form">
+            <!-- Login Form starts here -->
+            <div class="title">Login</div>
+              <form method="post" action="{% url 'login' %}">
+                      {% csrf_token %}
+                  <div class="input-boxes">
+                      <div class="input-box">
+                        <i class="fas fa-envelope"></i>
+                        <input type="text" name="useremail" placeholder="Enter your email" required>
+                      </div>
+                      <div class="input-box">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" name="password" id="password-login" placeholder="Enter your password" required>
+                        <span class="togglePassword-login" id="togglePassword-login">👁️</span>
+                      </div>
+                      <div class="text"><a href="{% url 'forget_password' %}">Forgot password?</a></div>
+                      <div class="button input-box">
+                        <input type="submit" value="Submit">
+                      </div>
+                      <div class="text sign-up-text">Don't have an account? <label for="flip">Sigup now</label>
+                      </div>
+                  </div>
+              </form>
+          </div>
+        <!-- Login Form ENDS here -->
+  
+          <div class="signup-form">
+            <!-- Sign Up form starts here -->
+            <div class="title">Signup</div>
+                <form id="signupForm" method="post" action="{% url 'sign_up' %}">
+                        {% csrf_token %}
+                  <div class="input-boxes">
+                      <div class="input-box">
+                        <i class="fas fa-user"></i>
+                        <input type="text" name="username" placeholder="Username" required>
+                      </div>
+                      <div class="input-box">
+                        <i class="fas fa-user"></i>
+                        <input type="text" name="name" placeholder="Your name" required>
+                      </div>
+                      <div class="input-box">
+                        <i class="fas fa-envelope"></i>
+                        <input type="tel" name="phone"  placeholder="Phone-No" required>
+                      </div>
+                      <div class="input-box">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" name="email" placeholder="Email" required>
+                      </div>
+                      <div class="input-box">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" name="password" id="password-signup" placeholder="Enter your password" required>
+                        <span class="togglePassword-signup" id="togglePassword-signup">👁️</span>
+                      </div>
+                      <div class="button input-box">
+                        <input type="submit" id="submitBtn" value="Submit">
+                      </div>
+                      <div class="text sign-up-text">Already have an account? <label for="flip">Login now</label></div>
+                  </div>
+              </form>
+          </div>
+        <!-- Sign Up Form ENDS here -->
+
+        </div>
+        <!-- Login/SignUp form ENDS HERE -->
+      </div>
+      <div id="otpPopup" class="popup">
+        <h2 style="font-size: 20px; color: #333;">OTP</h2>
+        <h4> An OTP has been sent to your email address.</h4>
+        
+              <!-- The OTP Form -->
+              <form id="otpForm" method="post" action="{% url 'verify_otp' %}">
+                  {% csrf_token %}
+                  <input type="text" id="otp" name="otp" placeholder="Enter OTP" maxlength="6">
+                  <br><br>
+                  <button type="submit" id="validateBtn">Validate</button>
+              </form>
+    </div>
+  
+  </div>
+  <!-- LOGIN/SIGNUP Container ENDS HERE here -->
+
+      <!-- OTP Popup -->
+    
+<script src="{% static 'js/login.js' %}"></script>
+<script src="{% static 'js/base.js' %}"></script>
+</body>
+</html>
