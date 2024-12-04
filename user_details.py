@@ -2,6 +2,12 @@ from logger import logging
 from database_connector import DatabaseConnector
 
 def get_user_details(useremail):
+    """Get user details
+    
+    Args:	Useremail: string User details
+
+    Returns: Dictionary of user details 
+    """
     with DatabaseConnector() as connector:
         cursor = connector.cursor()
         logging.debug(f"Getting user details from database for the user {useremail}")
@@ -24,6 +30,13 @@ def get_user_details(useremail):
 
         return user_details
 def update_user_details(user_details):
+    """
+    Update user details
+    Args: (user) User details object
+
+    Returns:
+        bool True if successful update else False
+    """
     cursor=None
     with DatabaseConnector() as connection:
         cursor=connection.cursor()
