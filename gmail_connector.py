@@ -4,23 +4,23 @@ from logger import logging
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import smtplib
-from utility import read_yaml
+import os
+from dotenv import load_dotenv
 import random,string
-
+load_dotenv()
 class MailSender():
     def __init__(self):
-        self.config = read_yaml("config.yaml")
-        self.SENDER_NAME_VALUE = self.config.get('SENDER_NAME')
-        self.SENDER_EMAIL = self.config.get('SMTP_USERNAME')
+        self.SENDER_NAME_VALUE = os.getenv('SENDER_NAME')
+        self.SENDER_EMAIL = os.getenv('SMTP_USERNAME')
         self.server_connection = None
         self.connect_to_smtp_server()
 
     def connect_to_smtp_server(self):
         try:
-            logging.debug(f"Connecting to SMTP server {self.config.get('SMTP_SERVER')}")
-            self.server_connection = smtplib.SMTP(self.config["SMTP_SERVER"], self.config["SMTP_PORT"])
+            logging.debug(f"Connecting to SMTP server {os.getenv('SMTP_SERVER')}")
+            self.server_connection = smtplib.SMTP(os.getenv("SMTP_SERVER"), os.getenv("SMTP_PORT"))
             self.server_connection.starttls()
-            self.server_connection.login(self.config["SMTP_USERNAME"], self.config["SMTP_PASSWORD"])
+            self.server_connection.login(os.getenv("SMTP_USERNAME"), os.getenv("SMTP_PASSWORD"))
             logging.info("Successfully authenticated to SMTP server")
         except (socket.gaierror, socket.timeout) as net_err:
             logging.error(f"Network issue while connecting to SMTP server: {str(net_err)}")
@@ -68,7 +68,7 @@ class MailSender():
             msg.attach(MIMEText(body, 'html'))  # Use HTML content
 
             # Send the email
-            self.server_connection.sendmail(self.config["SMTP_USERNAME"], useremail, msg.as_string())
+            self.server_connection.sendmail(os.getenv("SMTP_USERNAME"), useremail, msg.as_string())
             logging.info(f"Email sent to {useremail}")
 
         except smtplib.SMTPException as e:
@@ -76,7 +76,7 @@ class MailSender():
             # Reconnect and retry
             logging.info("Reconnecting to SMTP server...")
             self.connect_to_smtp_server()
-            self.server_connection.sendmail(self.config["SMTP_USERNAME"], useremail, msg.as_string())
+            self.server_connection.sendmail(os.getenv("SMTP_USERNAME"), useremail, msg.as_string())
             logging.info(f"Email re-sent to {useremail}")
 
     def signup_otp_sending(self, useremail)->int:
@@ -117,7 +117,7 @@ class MailSender():
             msg.attach(MIMEText(body, 'html'))  # Use HTML content
 
             # Send the email
-            self.server_connection.sendmail(self.config["SMTP_USERNAME"], useremail, msg.as_string())
+            self.server_connection.sendmail(os.getenv("SMTP_USERNAME"), useremail, msg.as_string())
             logging.info(f"Email sent to {useremail}")
             return otp
 
