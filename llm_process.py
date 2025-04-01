@@ -26,4 +26,4 @@ class PostAuthenticityChecker():
 
         chains=RunnableSequence(prompt,self.llm, StrOutputParser())
         result=chains.invoke(input={"post_content":post_content})
-        print(result)
+        return result
