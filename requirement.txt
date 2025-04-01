@@ -1,2 +1,7 @@
 django
-pyodbc 
+pypyodbc 
+langchain
+langchain_groq
+langchain_core
+bcrypt
+dotenv

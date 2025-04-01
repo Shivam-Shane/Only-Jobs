@@ -13,6 +13,7 @@ from login_verify import verify_login
 from user_details import get_user_details,update_user_details
 from posts import post_fetcher,post_creater
 from profile_picture import update_profile_picture
+from llm_process import PostAuthenticityChecker
 from logger import logging
 from forget_password import Password_reset
 from gmail_connector import MailSender
@@ -22,6 +23,7 @@ from django.conf import settings
 user_creation_object=Usercreation()
 password_reset_object=Password_reset()
 mail_sender_object=MailSender()
+postauthchecker=PostAuthenticityChecker()
 # ----------------------------------------------------------------
 
 
@@ -256,18 +258,22 @@ def post_create(request):
             directory=settings.MEDIA_ROOT
             if 'postfile' in request.FILES:
                 postfile = request.FILES['postfile']
-                
-
-            post_creation_result = post_creater(user_id,post_content,postfile,directory[0])
-        
-            # Create a message based on the result
-            if post_creation_result:
-                message = "Your post has been created successfully."
-                messages.success(request, message)
-            else:
-                message = "An error occurred while creating your post. Please try again."
+            post_validator=postauthchecker.check_post_authenticity(post_content)  
+            if post_validator=='valid':
+                post_creation_result = post_creater(user_id,post_content,postfile,directory[0])
+                # Create a message based on the result
+                if post_creation_result:
+                    message = "Your post has been created successfully."
+                    messages.success(request, message)
+                else:
+                    message = "An error occurred while creating your post. Please try again."
+                    messages.error(request, message)
+                return redirect('home')
+            elif post_validator=='invalid':
+                message = "Oops! This post doesn't seem to be a valid job listing. Please check and try again."
                 messages.error(request, message)
-            return redirect('home')
+                return redirect('home')
+            
         else: 
             message = "Post content should be at least 20 characters long."
             messages.error(request, message)
